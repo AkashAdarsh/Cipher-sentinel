@@ -97,7 +97,7 @@ For internal or licensed use only.
 ---
 
 ## 🤝 Credits
-Made with ❤️ by [Your Name].  
+Made with ❤️ by Akash Adarsh.  
 Cyberpunk vibes. Real-world protection.
 
 ---
