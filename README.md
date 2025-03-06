@@ -1,8 +1,5 @@
-Here’s the full `README.md` content ready for direct use in your repository. You can copy-paste this into a `README.md` file at the root of your project:
 
----
 
-```markdown
 # 🛡️ CipherSentinel
 
 > **CipherSentinel** is a next-gen AI-powered smart contract auditor and rug pull analyzer designed to protect the Ethereum ecosystem from malicious contracts and scams. Combining blockchain analytics, machine learning, and cyberpunk vibes into one modular, scalable platform.
@@ -16,14 +13,14 @@ Here’s the full `README.md` content ready for direct use in your repository. Y
 ---
 
 ## 🧩 Modular Structure
-```
+
 /CipherSentinel
-  /backend        → FastAPI backend (APIs, ML integration, blockchain scanner)
+/backend        → FastAPI backend (APIs, ML integration, blockchain scanner)
 /frontend        → Next.js frontend (UI, dashboards, interactions)
 /docs            → Architecture diagrams, specs, documentation
 /docker          → Dockerfiles, docker-compose orchestration
 /tests           → Unit and integration tests
-```
+
 
 ---
 
@@ -59,25 +56,43 @@ Here’s the full `README.md` content ready for direct use in your repository. Y
 ## 🏗️ Local Development
 
 ### Backend (FastAPI)
-```bash
+
 cd backend
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 uvicorn main:app --reload
-```
 
 ### Frontend (Next.js)
-```bash
 cd frontend
 npm install
 npm run dev
-```
+
 
 ### Docker (Full Stack)
-```bash
+
 docker-compose up --build
-```
+
+
+---
+## Environment Variables
+
+Create a `.env` file in the root directory with the following variables:
+
+```env
+# Infura Project ID for Ethereum (Goerli Testnet)
+INFURA_PROJECT_ID=your_infura_project_id
+
+# Etherscan API Key (optional, for future use)
+ETHERSCAN_API_KEY=your_etherscan_api_key
+
+# Application Settings
+DEBUG=True
+PORT=8000
+
+Install python-dotenv to load the variables:
+
+pip install python-dotenv
 
 ---
 
@@ -102,7 +117,7 @@ For internal or licensed use only.
 ---
 
 ## 🤝 Credits
-Made with ❤️ by [Your Name].  
+Made with ❤️ by Akash Adarsh.  
 Cyberpunk vibes. Real-world protection.
 
 ---
@@ -111,18 +126,5 @@ Cyberpunk vibes. Real-world protection.
 - Real-time contract event monitoring
 - Discord/Telegram alert integrations
 - Community-submitted contract auditing
-```
 
----
 
-✅ **Next Step:**  
-- Create a new file: `README.md` in the root of your project.  
-- Paste this content into it.  
-- Commit to GitHub as:
-  ```
-  git add README.md
-  git commit -m "Add initial project README"
-  git push origin main
-  ```
-
-Would you like me to prepare other starter files as well (like `.gitignore`, `requirements.txt`, or basic `Dockerfile` templates)?

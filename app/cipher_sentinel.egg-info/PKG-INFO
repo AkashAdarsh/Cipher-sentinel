@@ -1,0 +1,9 @@
+Metadata-Version: 2.2
+Name: cipher-sentinel
+Version: 0.1
+Requires-Dist: fastapi
+Requires-Dist: uvicorn
+Requires-Dist: web3
+Requires-Dist: pydantic
+Requires-Dist: python-dotenv
+Dynamic: requires-dist
