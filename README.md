@@ -73,6 +73,7 @@ npm run dev
 
 docker-compose up --build
 
+<<<<<<< HEAD
 
 ---
 ## Environment Variables
@@ -93,6 +94,8 @@ PORT=8000
 Install python-dotenv to load the variables:
 
 pip install python-dotenv
+=======
+>>>>>>> 2a21463f6b3b67466bc6534b2f32e9217c3960e1
 
 ---
 
