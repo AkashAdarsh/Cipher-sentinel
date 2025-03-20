@@ -2,25 +2,84 @@ version: '3.8'
 
 services:
   backend:
-    build: ./backend
+    build: 
+      context: .
+      dockerfile: app/Dockerfile
     ports:
       - "8000:8000"
     volumes:
-      - ./backend:/app
+      - ./app:/app
+      - ./ml:/ml
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - ML_MODEL_PATH=/ml/models
     networks:
       - ciphersentinel
+    depends_on:
+      - redis
+      - celery
 
   frontend:
-    build: ./frontend
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
     volumes:
       - ./frontend:/app
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
     depends_on:
       - backend
     networks:
       - ciphersentinel
 
+  celery:
+    build:
+      context: .
+      dockerfile: app/Dockerfile
+    command: celery -A app.tasks.audit_tasks worker --loglevel=info
+    volumes:
+      - ./app:/app
+      - ./ml:/ml
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - ML_MODEL_PATH=/ml/models
+    depends_on:
+      - redis
+    networks:
+      - ciphersentinel
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - ciphersentinel
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+
+  ml:
+    build:
+      context: .
+      dockerfile: ml/Dockerfile
+    volumes:
+      - ./ml:/ml
+    environment:
+      - MODEL_PATH=/ml/models
+    networks:
+      - ciphersentinel
+    depends_on:
+      - redis
+
 networks:
   ciphersentinel:
     driver: bridge
+
+volumes:
+  redis_data:

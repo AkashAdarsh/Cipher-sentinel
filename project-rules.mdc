@@ -1,0 +1,188 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+---
+description: 
+globs: 
+alwaysApply: false
+---
+
+# CipherSentinel Project Rules
+@file:requirements.txt
+@file:app/main.py
+@file:docker-compose.yml
+
+## System Configuration
+- **O/S**: 64-bit MacOS
+- **Backend**: FastAPI + Python 3.11
+- **Frontend**: Next.js + TypeScript
+- **ML Stack**: PyTorch + Hugging Face + Scikit-learn
+- **Blockchain**: Web3.py (Ethereum)
+
+## Project Structure
+```
+/CipherSentinel
+├── app/                # FastAPI backend
+├── frontend/          # Next.js frontend
+├── ml/               # ML models and training
+├── docs/             # Documentation
+└── docker/           # Docker configurations
+```
+
+## Development Standards
+
+### 1. Python Backend (FastAPI)
+```python
+# ✅ DO: Type hints, docstrings, error handling
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+
+class ContractRequest(BaseModel):
+    """
+    Contract analysis request model.
+    
+    Attributes:
+        address (str): Ethereum contract address
+        chain_id (int): Ethereum chain ID
+    """
+    address: str
+    chain_id: int = 1  # mainnet default
+
+@app.post("/analyze")
+async def analyze_contract(request: ContractRequest):
+    try:
+        # Implementation
+        pass
+    except Web3Error as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+# ❌ DON'T: Skip type hints or error handling
+@app.post("/analyze")
+def analyze_contract(address):
+    # Unsafe implementation
+    pass
+```
+
+### 2. ML Model Development
+```python
+# ✅ DO: Clear model architecture, proper documentation
+class ContractAnalyzer(nn.Module):
+    """
+    Smart contract analysis model using transformer architecture.
+    
+    Args:
+        vocab_size (int): Size of bytecode vocabulary
+        hidden_dim (int): Dimension of hidden layers
+    """
+    def __init__(self, vocab_size: int, hidden_dim: int):
+        super().__init__()
+        self.encoder = CodeBERT.from_pretrained('microsoft/codebert-base')
+        self.classifier = nn.Linear(hidden_dim, num_classes)
+
+# ❌ DON'T: Skip model documentation or type hints
+class ContractAnalyzer(nn.Module):
+    def __init__(self, vocab_size, hidden_dim):
+        # Unclear implementation
+        pass
+```
+
+### 3. Frontend Development (Next.js)
+```typescript
+// ✅ DO: Type safety, error boundaries, loading states
+interface ContractAnalysisProps {
+  contractAddress: string;
+  chainId: number;
+}
+
+const ContractAnalysis: React.FC<ContractAnalysisProps> = ({
+  contractAddress,
+  chainId,
+}) => {
+  const { data, error, isLoading } = useContractAnalysis({
+    contractAddress,
+    chainId,
+  });
+
+  if (isLoading) return <LoadingSpinner />;
+  if (error) return <ErrorDisplay error={error} />;
+  
+  return <AnalysisDisplay data={data} />;
+};
+
+// ❌ DON'T: Skip type definitions or error handling
+const ContractAnalysis = (props) => {
+  // Unsafe implementation
+};
+```
+
+### 4. Smart Contract Interaction
+```python
+# ✅ DO: Proper Web3 error handling and type checking
+from web3 import Web3
+from web3.exceptions import ContractLogicError
+
+async def fetch_contract_bytecode(address: str) -> str:
+    """
+    Fetch contract bytecode from Ethereum network.
+    
+    Args:
+        address (str): Contract address
+        
+    Returns:
+        str: Contract bytecode
+        
+    Raises:
+        HTTPException: If contract not found or network error
+    """
+    try:
+        bytecode = await web3.eth.get_code(address)
+        if bytecode == "0x": 
+            raise ValueError("Contract not found")
+        return bytecode
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+# ❌ DON'T: Skip error handling for blockchain operations
+def fetch_contract_bytecode(address):
+    return web3.eth.get_code(address)
+```
+
+## File References
+- @file:app/main.py - FastAPI application entry
+- @file:app/models/audit.py - Audit models
+- @file:ml/models/analyzer.py - ML models
+- @file:frontend/src/pages/index.tsx - Frontend entry
+- @file:docker-compose.yml - Service orchestration
+
+## Validation Checklist
+- [ ] Type hints for all Python functions
+- [ ] TypeScript interfaces for all props
+- [ ] Comprehensive error handling
+- [ ] Loading states for async operations
+- [ ] ML model documentation
+- [ ] Test coverage
+- [ ] Docker configuration
+- [ ] Environment variables
+
+## Environment Variables
+```env
+# Required in .env
+INFURA_PROJECT_ID=
+ETHERSCAN_API_KEY=
+ML_MODEL_PATH=
+REDIS_URL=
+```
+
+## Testing Requirements
+- Backend: pytest
+- Frontend: Jest + React Testing Library
+- ML: Model evaluation metrics
+- Smart Contracts: Web3.py mocks
+
+## Documentation
+- OpenAPI/Swagger for backend
+- TSDoc for frontend
+- Model cards for ML models
+- Architecture diagrams

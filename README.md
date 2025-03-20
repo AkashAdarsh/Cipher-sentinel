@@ -1,5 +1,3 @@
-
-
 # 🛡️ CipherSentinel
 
 > **CipherSentinel** is a next-gen AI-powered smart contract auditor and rug pull analyzer designed to protect the Ethereum ecosystem from malicious contracts and scams. Combining blockchain analytics, machine learning, and cyberpunk vibes into one modular, scalable platform.
@@ -7,109 +5,167 @@
 ---
 
 ## 🚀 Project Status
-> 🛠️ **Status:** Pre-MVP Development (Day 2)  
-> 🗓️ **Current Focus:** Backend & Frontend scaffolding, API setup, Dockerization  
+> 🛠️ **Status:** Pre-MVP Development (27% Complete)  
+> 🗓️ **Current Focus:** Contract Analysis Pipeline & ML Infrastructure
+
+### Component Progress
+- Backend: 45% Complete
+- Frontend: 15% Complete
+- ML Infrastructure: 5% Complete
+- DevOps: 40% Complete
+- Documentation: 30% Complete
 
 ---
 
-## 🧩 Modular Structure
-
-/CipherSentinel
-/backend        → FastAPI backend (APIs, ML integration, blockchain scanner)
-/frontend        → Next.js frontend (UI, dashboards, interactions)
-/docs            → Architecture diagrams, specs, documentation
-/docker          → Dockerfiles, docker-compose orchestration
-/tests           → Unit and integration tests
-
-
----
+## 🧩 Project Structure
+```
+CipherSentinel/
+├── app/                    # FastAPI backend
+│   ├── models/            # Data models
+│   ├── services/          # Business logic
+│   ├── tasks/             # Celery tasks
+│   └── utils/             # Utilities
+├── frontend/              # Next.js frontend
+│   └── src/              # Frontend source
+├── ml/                    # ML infrastructure
+│   ├── models/           # ML models
+│   └── inference/        # Model inference
+├── docs/                 # Documentation
+└── tests/               # Test suites
+```
 
 ## ⚡ Tech Stack
-| Layer               | Technology                  |
-|---------------------|-----------------------------|
-| Frontend           | Next.js, TailwindCSS        |
-| Backend            | FastAPI (Python)            |
-| Blockchain Access  | Web3.py (Ethereum)          |
-| ML Models          | PyTorch, Hugging Face, Scikit-learn |
-| Containerization   | Docker, Docker Compose      |
-| Version Control    | Git + GitHub                |
+| Layer               | Technology                  | Status    |
+|---------------------|-----------------------------|-----------|
+| Frontend           | Next.js 15, TailwindCSS     | Setup     |
+| Backend            | FastAPI, Celery, Redis      | In Progress|
+| Blockchain         | Web3.py, Slither            | In Progress|
+| ML Models          | PyTorch, Hugging Face       | Planned   |
+| Database           | Redis                       | Setup     |
+| Containerization   | Docker, Docker Compose      | Setup     |
 
 ---
 
-## 🎯 MVP Goals
-✅ Analyze Ethereum smart contracts for common vulnerabilities  
-✅ Detect potential rug pull patterns through behavioral analytics  
-✅ Deliver transparent, actionable risk reports via a web interface  
+## 🎯 Current Features
+✅ Health check endpoint  
+✅ Contract bytecode fetcher  
+✅ Basic vulnerability scanner  
+✅ Async task processing  
+✅ Contract risk scoring  
+✅ Gas analysis  
 
----
-
-## 🗂️ Features Roadmap
-| Phase | Features |
-|-------|----------|
-| 🔹 MVP  | Health check, contract fetcher, basic ML auditor |
-| 🔹 v1.0 | Rug pull detector, risk scoring, frontend dashboards |
-| 🔹 v1.5 | Ethereum Mainnet live monitoring, contract history visualizations |
-| 🔹 v2.0 | Multi-chain support (Solana, BSC), advanced ML insights |
+## 🚧 In Development
+- ML-based contract analysis
+- Real-time monitoring
+- Frontend dashboard
+- WebSocket updates
+- Enhanced security checks
 
 ---
 
 ## 🏗️ Local Development
 
-### Backend (FastAPI)
+### Prerequisites
+- Python 3.11+
+- Node.js 18+
+- Redis
+- Docker (optional)
 
-cd backend
-python3 -m venv venv
-source venv/bin/activate
+### Backend Setup
+```bash
+# Create and activate virtual environment
+python -m venv .venv
+source .venv/bin/activate  # Unix
+.venv\Scripts\activate     # Windows
+
+# Install dependencies
 pip install -r requirements.txt
-uvicorn main:app --reload
 
-### Frontend (Next.js)
+# Start Redis server
+redis-server
+
+# Start FastAPI server
+uvicorn app.main:app --reload
+
+# Start Celery worker (in new terminal)
+celery -A app.tasks.audit_tasks worker --loglevel=info
+```
+
+### Frontend Setup
+```bash
 cd frontend
 npm install
 npm run dev
+```
 
-
-### Docker (Full Stack)
-
+### Docker Setup
+```bash
+# Start all services
 docker-compose up --build
 
-<<<<<<< HEAD
+# Start specific service
+docker-compose up redis -d
+```
 
 ---
-## Environment Variables
 
-Create a `.env` file in the root directory with the following variables:
-
+## 🔧 Environment Variables
+Create a `.env` file in the root directory:
 ```env
-# Infura Project ID for Ethereum (Goerli Testnet)
+# Required
 INFURA_PROJECT_ID=your_infura_project_id
-
-# Etherscan API Key (optional, for future use)
 ETHERSCAN_API_KEY=your_etherscan_api_key
 
-# Application Settings
+# Optional
 DEBUG=True
 PORT=8000
-
-Install python-dotenv to load the variables:
-
-pip install python-dotenv
-=======
->>>>>>> 2a21463f6b3b67466bc6534b2f32e9217c3960e1
+REDIS_URL=redis://localhost:6379/0
+ML_MODEL_PATH=/path/to/models
+```
 
 ---
 
-## 📄 Documentation
-- [Architecture Diagram](./docs/architecture.png)
-- API docs: `http://localhost:8000/docs`
+## 📚 API Documentation
+- OpenAPI docs: `http://localhost:8000/docs`
 - Frontend: `http://localhost:3000`
 
+### Key Endpoints
+- `GET /health` - Service health check
+- `POST /audit` - Submit contract for analysis
+- `GET /audit/{task_id}` - Get analysis results
+
 ---
 
-## 📌 Contribution Guide (Coming Soon)
-- How to set up the dev environment
-- Coding standards
-- Issue tracking
+## 🧪 Testing
+```bash
+# Backend tests
+pytest
+
+# Frontend tests
+cd frontend && npm test
+```
+
+---
+
+## 📈 Roadmap
+
+### Phase 1: MVP (Current)
+- [x] Basic contract analysis
+- [x] Async task processing
+- [ ] ML model integration
+- [ ] Frontend dashboard
+
+### Phase 2: v1.0
+- [ ] Enhanced rug pull detection
+- [ ] Real-time monitoring
+- [ ] User authentication
+- [ ] Advanced analytics
+
+### Phase 3: v1.5
+- [ ] Multi-chain support
+- [ ] API marketplace
+- [ ] Community features
+- [ ] Mobile app
 
 ---
 
